@@ -1,0 +1,148 @@
+<html>
+	<head>
+		<title>Bubble Hunter</title>
+
+		<script src = "bubble_hunter.js"></script> 
+
+		<!--задаём 4 класса кнопок-->
+
+		<style>        
+		.my_button {
+			background: black;			
+			color: white;
+			width: 107%;
+			height: 20%;
+			font: 20px Times New Roman;
+			}
+		</style>
+
+		<style>
+		.my_button1 {
+			background: blue;
+			color: white;
+			width: 100%;
+			height: 20%;
+			font: 20px Times New Roman;
+			}
+		</style>
+
+		
+		<style>
+		.my_button2 {
+			background: black;
+			color: white;
+			width: 200%;
+			height: 200%;
+			font: 20px Times New Roman;
+			}
+		</style>
+
+		
+		<style>
+		.my_button3 {
+			background: black;
+			color: white;
+			width: 25%;
+			height: 20%;
+			font: 20px Times New Roman;
+			}
+		</style>
+	</head>
+
+
+	<style>
+		body {
+			background-image: url("126.jpg")
+		}
+	</style> 
+		
+
+	<body>
+		<center><canvas id = "title_zone" width = 700 height = 50 style = "border: 0px solid red"></canvas></center>		
+
+		<!--создаем окно для написания заголовка (названия игры) размерами 700 x 50 и с толщиной линии обводки этого окна равной 0-->
+
+			<script>
+
+				var canvas = document.getElementById("title_zone")			//создаём переменную, обращённую к нашему окну
+				context = canvas.getContext("2d");
+				context.font = "40px Times New Roman";					//размер и стиль шрифта
+				context.fillStyle = "white"								//цвет закраски букв
+				context.strokeStyle = "red";							//цвет обводки
+				context.lineWidth = 2;									//толщина линии обводки
+
+				context.shadowBlur = 15;							
+				context.shadowOffsetX = 0;								//рисуем тень
+				context.shadowOffsetY = 0;
+				context.shadowColor = "black";
+
+				context.strokeText("Bubble Hunter", 235, 30);			//выбираем текст и его расположение
+				context.fillText("Bubble Hunter", 235, 30);				//закрашиваем второй строкой буквы
+			</script>
+	</body>
+
+
+	<body>
+	    <div>															<!--выставляем местоположение кнопок-->
+			<div style = "position: fixed; top:8%;  left:3%">			<!--кнопка ничего не делает при нажатии-->
+			<input id = click1 type = text value = " Choose difficulty level:" class = "my_button">
+		</div>
+		
+
+		<div>
+			<div style = "position: fixed; top:83%;  left:3%">			<!--кнопка-индикатор очков - тоже ничего не делает при нажатии-->
+			<input id = click2 type = text value = "Score:" class = "my_button3">
+			</div>
+		</div>
+
+
+		<div>
+			<div style = "position: fixed; top:15%;  left:3%">			<!--одна из трёх кнопок выбра уровня сложности-->
+			<input  id = click3 type = button value = "Middle" class = "my_button1">
+			</div>
+		</div>
+		
+
+		<div>
+			<div style = "position: fixed; top:20%;  left:3%">
+			<input  id = click4 type = button value = "Hard" class = "my_button1">
+			</div>
+		</div>
+		
+
+		<div>
+			<div style = "position: fixed; top:25%;  left:3%">		
+			<input  id = click5 type = button value = "Crazy" class = "my_button1">
+			</div>
+		</div>
+
+		
+		<div>
+			<div style = "position: fixed; top:35%;  left:3%">			<!--кнопка "играть" запускает игру-->
+			<input id = click6 type = button value = "Play" class = "my_button2">
+			</div>
+		</div>
+	</body>
+
+
+	<body>
+		<center><canvas id = "game_zone" width = 700 height = 500 style = "border: 3px solid blue"></canvas></center>
+
+		<!--здесь мы создаем другое, игровое окно размером 700 x 500-->
+
+			<div>
+				<div style = "position: fixed; top:83.4%;  left:10%">
+				<span id = "span_score" class = "my_button3">				<!--окошко для вывода очков-->
+				</div>
+			</div>
+
+
+		    <script>
+				var canvas = document.getElementById("game_zone")
+				context = canvas.getContext("2d");
+
+				context.fillStyle = "black"								//основное поле - чёрное
+				context.fillRect(0, 0, game_zone.width, game_zone.height) 
+			</script>
+	</body>
+</html>
