@@ -6,8 +6,35 @@ function main_prog(){
 	var ctx = game_zone.getContext("2d")
 	var w = game_zone.width;
 	var h = game_zone.height;
-	var l = 11											//для уровня сложности
+	var l = 11
 	var timerId = 0
+
+
+	click3.onclick = function(){
+		l = 15											//уровень сложности: средне
+		reset_timer()									//в случае смены уровня сложности, обновляем счётчик
+	}
+
+
+	click4.onclick = function(){
+		l = 10											//сложно
+		reset_timer()
+	}
+
+
+	click5.onclick = function(){
+		l = 5											//очень сложно
+		reset_timer()
+	}
+
+	
+	function circle(ctx, x, y, r) { 					//рисовка окружностей
+		ctx.beginPath();
+		ctx.arc(x, y, r, 0, Math.PI * 2);
+		ctx.stroke();
+		ctx.fill();
+	}
+	
 
 	var es = 0											//чтобы при кратности 4 не увеличивалось при непопадпнии	
 	var k = 0											//показатель нажатия
@@ -21,34 +48,12 @@ function main_prog(){
 	Zz = [0,0]											//для увеличения радиуса
 	Rr = [0,0]											//начальное значение радиуса
 
-	for (i = 0; i < 2; i++){ 							//начальные значаения кооридинат шариков - случайное из поля
+	for (i = 0; i < 2; i++){ 							//начальные значаения кооридинат шариков - случайное из поля game_zone
 		Xx[i] = Math.floor((Math.random()*w))
 		Yy[i] = Math.floor((Math.random()*h))	
 	}
 
 
-	click3.onclick = function(){
-		l = 11											//уровень сложности: средне
-	}
-
-
-	click4.onclick = function(){
-		l = 8											//сложно
-	}
-
-
-	click5.onclick = function(){
-		l = 5											//очень сложно
-	}
-
-	
-	function circle(ctx, x, y, r) { 					//рисовка окружностей
-		ctx.beginPath();
-		ctx.arc(x, y, r, 0, Math.PI * 2);
-		ctx.stroke();
-		ctx.fill();
-	}
-	
 
 	function mouse_coords(e){							//функция, чтобы мышкой пользоваться (возвращает координаты нажатия)
 		var m = {}
@@ -62,7 +67,7 @@ function main_prog(){
 	function calculation() {							//функция, где всё обсчитывается
 
 
-		game_zone.onmousedown = function(e){				//функция, срабатывающая на нажатие курсором
+		game_zone.onmousedown = function(e){			//функция, срабатывающая на нажатие курсором
 
 			es = 1
 			var R = mouse_coords(e);
@@ -85,14 +90,14 @@ function main_prog(){
 					Rr[i] = 0							//обнуляем радиус шарика, по которому попали
 					Xx[i] = Math.floor(Math.random() * w)//изменяем координату того шарика по которому попадаем
 					Yy[i] = Math.floor(Math.random() * h)//изменяем координату того шарика по которому попадаем
-					Zz[i] = 0							//это тоже обнуляем
+					Zz[i] = 0							
 
-					j--									//попал, значит на 1 непромах меньше
+					j--									//попал, зхначит на i меньше
 				}
 		    }
 
 			if(j == L){
-				s = s - 100 							//если не попали снмаем очки	
+				s = s - 100 							//если не попали, снмаем очки	
 			}	    
 		}	
 	
@@ -141,13 +146,10 @@ function main_prog(){
 			if (Zz[i] == 1){
 				Rr[i]--
 			}
-			
-			
-
 		}
-
 	}
 		
+	
 	
 	function draw(){									//рисуем кружки
 
@@ -162,37 +164,36 @@ function main_prog(){
 		}
 	}
 
-	
 
-	function end_of_the_game(){
-		alert('игра окончена, ваш счёт: ' + s + ' очков')
+	function play_func() {								//запуск счётчика
+		timerId = setInterval(function() {
+			calculation();
+			draw();
+    	}, 10 * l)
 	}
 
 
-
- 	click6.onclick = function(){						//запуск игры 
-
- 		if (timerId != 0) {
- 			click6.value = "Play"
-	    	clearInterval(timerId)
-            timerId = 0
- 		} else {
- 			click6.value = "Stop"
-      		timerId = setInterval(function() {
-				calculation();
-				draw();
-			}, 15 * l);
-		}
-/*
-		setTimeout(function() {
-
+    function reset_timer() {							//останавливаем счётчик и запускаем с другим значением временного промежутка
+        if (timerId != 0) {
 			clearInterval(timerId)
-			end_of_the_game()
-		}, 50000);										//игра завершается через 50 секунд
-*/		
- 	}
+            timerId = 0
+            play_func()
+        }
+    }
+
+
+ 	click6.onclick = function(){						//кнопка запуска/остановки игры
+
+	 	if (timerId != 0) {
+	 		click6.value = "Play"
+	     	clearInterval(timerId)
+            timerId = 0
+	 	} else {
+	 		click6.value = "Stop"
+	 		play_func()
+	 	}
+	}
  }
-	
 
 	
 	
